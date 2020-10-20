@@ -130,7 +130,7 @@
 								</div>
 							</div>
 
-							@if (Model.CourseTypePKID == CroResourceHelper.Video)
+							@if (Model.ResourceTypePKID == CroResourceHelper.Video)
 							{
 								foreach (var item in Model.Courses ?? new List<MicroCourse>())
 								{
@@ -242,25 +242,25 @@
 						isValid=false;
 						$this.after('<div class="error" style="color:#a94442">内容不能为空!</div>');
 					}
-				});
+				});*@
 
-				$('.courseUploader .resource-path,.designUploader .resource-path').each(function(){
+				$('.courseUploader .resource-path, .thesisUploader .resource-path').each(function(){
 					var $this=$(this);
 					if($this.val()==''){
 						isValid=false;
 						$this.parent().after('<div class="error" style="color:#a94442">内容不能为空</div>');
 					}
-				});*@
+				});
 
 				if($('#form').valid() && isValid){
 					var o = createSubmitObject();
 					$.post('@Url.Action("Upload", "CroMy")',{resid:'@Model.CrosourceId',model:o},function(){
-						@*location.href='@Url.Action("CroMyResource", "CroMy",new { id= id})';*@
-					});
-				}
+						location.href='@Url.Action("CroMyResource", "CroMy",new { id= id})';
+			});
+		}
 
 				return false;
-			});
+		});
 
 		})
 
@@ -276,6 +276,7 @@
 			o.AuthorEmail=$('#AuthorEmail').val();
 			o.AuthorPhone=$('#AuthorPhone').val();
 			o.GradePKID=$('#GradePKID').val();
+			o.StagePKID=$('#StagePKID').val();
 			o.SubjectPKID=$('#SubjectPKID').val();
 			o.CourseTypePKID=$('#CourseTypePKID').val();
 			o.CompanyId=$('#CompanyId').val();
@@ -285,7 +286,7 @@
 			o.ActiveId=$('#ActiveId').val();
 			o.DeliveryTypePKID=$('#DeliveryTypePKID').val();
 			o.ResourceTypePKID=$('#ResourceTypePKID').val();
-			o.ThesisId=$('#ThesisId').val(); // thesis id 
+			o.ThesisId=$('#ThesisId').val(); // thesis id
 
 			$('.courseArea').each(function(i){
 				var $this=$(this);
@@ -302,23 +303,6 @@
 					CharpterSortId:i+1,
 					Exercises:[]
 				};
-
-				$this.find('.exercises').each(function(){
-					var $execise= $(this);
-					var exe={};
-					exe.Name=$execise.find('.title').val();
-					exe.Answer= $execise.find('.key').val();
-					exe.Items=[];
-					$execise.find('.item').each(function(){
-						var $item=$(this);
-						exe.Items.push({
-							Code:$item.find('.optionKey').html(),
-							Item:$item.find('.optionName').val()
-						});
-					});
-
-					course.Exercises.push(exe);
-				});
 
 				o.Courses.push(course);
 			});

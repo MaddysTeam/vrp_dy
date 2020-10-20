@@ -95,7 +95,7 @@ namespace Res.Controllers
       {
          var t = APDBDef.CroResource;
          var userid = id;
-         var query = APQuery.select(t.CrosourceId, t.Title, t.Author, t.PublicStatePKID, t.DownloadStatePKID, //t.CoverPath, t.FileExtName, 
+         var query = APQuery.select(t.CrosourceId, t.Title, t.Author, t.PublicStatePKID, t.DownloadStatePKID,t.ResourceTypePKID, //t.CoverPath, t.FileExtName, 
              t.Description, t.CreatedTime, t.AuditOpinion, t.StatePKID,t.ActiveId)
             .from(t)
             .where(t.Creator == userid)
@@ -126,7 +126,8 @@ namespace Res.Controllers
                OccurTime = t.CreatedTime.GetValue(reader),
                StatePKID = t.StatePKID.GetValue(reader),
                AuditOpinion = t.AuditOpinion.GetValue(reader),
-			   IsCurrentActive=t.ActiveId.GetValue(reader)==ThisApp.CurrentActiveId
+			   IsCurrentActive=t.ActiveId.GetValue(reader)==ThisApp.CurrentActiveId,
+			   ResourceTypePKID=t.ResourceTypePKID.GetValue(reader)
             };
          }).ToList();
       }

@@ -3925,6 +3925,8 @@ namespace Res.Business {
             
             private Int64APColumnDef _crosourceId;
             
+            private Int64APColumnDef _thesisId;
+            
             private StringAPColumnDef _title;
             
             private StringAPColumnDef _medalTitle;
@@ -4019,6 +4021,19 @@ namespace Res.Business {
                         _crosourceId.Display = "作品ID";
                     }
                     return _crosourceId;
+                }
+            }
+            
+            /// <summary>
+            /// ThesisId ColumnDef
+            /// </summary>
+            public virtual Int64APColumnDef ThesisId {
+                get {
+                    if (Object.ReferenceEquals(_thesisId, null)) {
+                        _thesisId = new Int64APColumnDef(this, "ThesisId", false);
+                        _thesisId.Display = "论文文件ID";
+                    }
+                    return _thesisId;
                 }
             }
             
@@ -4545,6 +4560,7 @@ namespace Res.Business {
             /// </summary>
             public virtual void Fullup(IDataReader reader, CroResource data, bool throwIfValidColumnName) {
                 data.CrosourceId = CrosourceId.GetValue<long>(reader, throwIfValidColumnName);
+                data.ThesisId = ThesisId.GetValue<long>(reader, throwIfValidColumnName);
                 data.Title = Title.GetValue<string>(reader, throwIfValidColumnName);
                 data.MedalTitle = MedalTitle.GetValue<string>(reader, throwIfValidColumnName);
                 data.Author = Author.GetValue<string>(reader, throwIfValidColumnName);
@@ -10943,7 +10959,7 @@ namespace Res.Business {
                 if ((data.CrosourceId == 0)) {
                     data.CrosourceId = ((long)(GetNewId(APDBDef.CroResource.CrosourceId)));
                 }
-                var query = APQuery.insert(APDBDef.CroResource).values(APDBDef.CroResource.CrosourceId.SetValue(data.CrosourceId), APDBDef.CroResource.Title.SetValue(data.Title), APDBDef.CroResource.MedalTitle.SetValue(data.MedalTitle), APDBDef.CroResource.Author.SetValue(data.Author), APDBDef.CroResource.Keywords.SetValue(data.Keywords), APDBDef.CroResource.Description.SetValue(data.Description), APDBDef.CroResource.ProvinceId.SetValue(data.ProvinceId), APDBDef.CroResource.AreaId.SetValue(data.AreaId), APDBDef.CroResource.CompanyId.SetValue(data.CompanyId), APDBDef.CroResource.ActiveId.SetValue(data.ActiveId), APDBDef.CroResource.AuthorCompany.SetValue(data.AuthorCompany), APDBDef.CroResource.AuthorAddress.SetValue(data.AuthorAddress), APDBDef.CroResource.AuthorEmail.SetValue(data.AuthorEmail), APDBDef.CroResource.AuthorPhone.SetValue(data.AuthorPhone), APDBDef.CroResource.StagePKID.SetValue(data.StagePKID), APDBDef.CroResource.GradePKID.SetValue(data.GradePKID), APDBDef.CroResource.ResourceTypePKID.SetValue(data.ResourceTypePKID), APDBDef.CroResource.SubjectPKID.SetValue(data.SubjectPKID), APDBDef.CroResource.CourseTypePKID.SetValue(data.CourseTypePKID), APDBDef.CroResource.StatePKID.SetValue(data.StatePKID), APDBDef.CroResource.PublicStatePKID.SetValue(data.PublicStatePKID), APDBDef.CroResource.DownloadStatePKID.SetValue(data.DownloadStatePKID), APDBDef.CroResource.WinLevelPKID.SetValue(data.WinLevelPKID), APDBDef.CroResource.DownCount.SetValue(data.DownCount), APDBDef.CroResource.FavoriteCount.SetValue(data.FavoriteCount), APDBDef.CroResource.ViewCount.SetValue(data.ViewCount), APDBDef.CroResource.CommentCount.SetValue(data.CommentCount), APDBDef.CroResource.EliteScore.SetValue(data.EliteScore), APDBDef.CroResource.PraiseCount.SetValue(data.PraiseCount), APDBDef.CroResource.Auditor.SetValue(data.Auditor), APDBDef.CroResource.AuditedTime.SetValue(data.AuditedTime), APDBDef.CroResource.AuditOpinion.SetValue(data.AuditOpinion), APDBDef.CroResource.Creator.SetValue(data.Creator), APDBDef.CroResource.CreatedTime.SetValue(data.CreatedTime), APDBDef.CroResource.LastModifier.SetValue(data.LastModifier), APDBDef.CroResource.LastModifiedTime.SetValue(data.LastModifiedTime), APDBDef.CroResource.Score.SetValue(data.Score), APDBDef.CroResource.WeiXinFavoriteCount.SetValue(data.WeiXinFavoriteCount), APDBDef.CroResource.WeiXInPraiseCount.SetValue(data.WeiXInPraiseCount));
+                var query = APQuery.insert(APDBDef.CroResource).values(APDBDef.CroResource.CrosourceId.SetValue(data.CrosourceId), APDBDef.CroResource.ThesisId.SetValue(data.ThesisId), APDBDef.CroResource.Title.SetValue(data.Title), APDBDef.CroResource.MedalTitle.SetValue(data.MedalTitle), APDBDef.CroResource.Author.SetValue(data.Author), APDBDef.CroResource.Keywords.SetValue(data.Keywords), APDBDef.CroResource.Description.SetValue(data.Description), APDBDef.CroResource.ProvinceId.SetValue(data.ProvinceId), APDBDef.CroResource.AreaId.SetValue(data.AreaId), APDBDef.CroResource.CompanyId.SetValue(data.CompanyId), APDBDef.CroResource.ActiveId.SetValue(data.ActiveId), APDBDef.CroResource.AuthorCompany.SetValue(data.AuthorCompany), APDBDef.CroResource.AuthorAddress.SetValue(data.AuthorAddress), APDBDef.CroResource.AuthorEmail.SetValue(data.AuthorEmail), APDBDef.CroResource.AuthorPhone.SetValue(data.AuthorPhone), APDBDef.CroResource.StagePKID.SetValue(data.StagePKID), APDBDef.CroResource.GradePKID.SetValue(data.GradePKID), APDBDef.CroResource.ResourceTypePKID.SetValue(data.ResourceTypePKID), APDBDef.CroResource.SubjectPKID.SetValue(data.SubjectPKID), APDBDef.CroResource.CourseTypePKID.SetValue(data.CourseTypePKID), APDBDef.CroResource.StatePKID.SetValue(data.StatePKID), APDBDef.CroResource.PublicStatePKID.SetValue(data.PublicStatePKID), APDBDef.CroResource.DownloadStatePKID.SetValue(data.DownloadStatePKID), APDBDef.CroResource.WinLevelPKID.SetValue(data.WinLevelPKID), APDBDef.CroResource.DownCount.SetValue(data.DownCount), APDBDef.CroResource.FavoriteCount.SetValue(data.FavoriteCount), APDBDef.CroResource.ViewCount.SetValue(data.ViewCount), APDBDef.CroResource.CommentCount.SetValue(data.CommentCount), APDBDef.CroResource.EliteScore.SetValue(data.EliteScore), APDBDef.CroResource.PraiseCount.SetValue(data.PraiseCount), APDBDef.CroResource.Auditor.SetValue(data.Auditor), APDBDef.CroResource.AuditedTime.SetValue(data.AuditedTime), APDBDef.CroResource.AuditOpinion.SetValue(data.AuditOpinion), APDBDef.CroResource.Creator.SetValue(data.Creator), APDBDef.CroResource.CreatedTime.SetValue(data.CreatedTime), APDBDef.CroResource.LastModifier.SetValue(data.LastModifier), APDBDef.CroResource.LastModifiedTime.SetValue(data.LastModifiedTime), APDBDef.CroResource.Score.SetValue(data.Score), APDBDef.CroResource.WeiXinFavoriteCount.SetValue(data.WeiXinFavoriteCount), APDBDef.CroResource.WeiXInPraiseCount.SetValue(data.WeiXInPraiseCount));
                 ExecuteNonQuery(query);
             }
             
@@ -10951,7 +10967,7 @@ namespace Res.Business {
             /// 更新数据。
             /// </summary>
             public virtual void Update(CroResource data) {
-                var query = APQuery.update(APDBDef.CroResource).values(APDBDef.CroResource.Title.SetValue(data.Title), APDBDef.CroResource.MedalTitle.SetValue(data.MedalTitle), APDBDef.CroResource.Author.SetValue(data.Author), APDBDef.CroResource.Keywords.SetValue(data.Keywords), APDBDef.CroResource.Description.SetValue(data.Description), APDBDef.CroResource.ProvinceId.SetValue(data.ProvinceId), APDBDef.CroResource.AreaId.SetValue(data.AreaId), APDBDef.CroResource.CompanyId.SetValue(data.CompanyId), APDBDef.CroResource.ActiveId.SetValue(data.ActiveId), APDBDef.CroResource.AuthorCompany.SetValue(data.AuthorCompany), APDBDef.CroResource.AuthorAddress.SetValue(data.AuthorAddress), APDBDef.CroResource.AuthorEmail.SetValue(data.AuthorEmail), APDBDef.CroResource.AuthorPhone.SetValue(data.AuthorPhone), APDBDef.CroResource.StagePKID.SetValue(data.StagePKID), APDBDef.CroResource.GradePKID.SetValue(data.GradePKID), APDBDef.CroResource.ResourceTypePKID.SetValue(data.ResourceTypePKID), APDBDef.CroResource.SubjectPKID.SetValue(data.SubjectPKID), APDBDef.CroResource.CourseTypePKID.SetValue(data.CourseTypePKID), APDBDef.CroResource.StatePKID.SetValue(data.StatePKID), APDBDef.CroResource.PublicStatePKID.SetValue(data.PublicStatePKID), APDBDef.CroResource.DownloadStatePKID.SetValue(data.DownloadStatePKID), APDBDef.CroResource.WinLevelPKID.SetValue(data.WinLevelPKID), APDBDef.CroResource.DownCount.SetValue(data.DownCount), APDBDef.CroResource.FavoriteCount.SetValue(data.FavoriteCount), APDBDef.CroResource.ViewCount.SetValue(data.ViewCount), APDBDef.CroResource.CommentCount.SetValue(data.CommentCount), APDBDef.CroResource.EliteScore.SetValue(data.EliteScore), APDBDef.CroResource.PraiseCount.SetValue(data.PraiseCount), APDBDef.CroResource.Auditor.SetValue(data.Auditor), APDBDef.CroResource.AuditedTime.SetValue(data.AuditedTime), APDBDef.CroResource.AuditOpinion.SetValue(data.AuditOpinion), APDBDef.CroResource.Creator.SetValue(data.Creator), APDBDef.CroResource.CreatedTime.SetValue(data.CreatedTime), APDBDef.CroResource.LastModifier.SetValue(data.LastModifier), APDBDef.CroResource.LastModifiedTime.SetValue(data.LastModifiedTime), APDBDef.CroResource.Score.SetValue(data.Score), APDBDef.CroResource.WeiXinFavoriteCount.SetValue(data.WeiXinFavoriteCount), APDBDef.CroResource.WeiXInPraiseCount.SetValue(data.WeiXInPraiseCount)).where((APDBDef.CroResource.CrosourceId == data.CrosourceId));
+                var query = APQuery.update(APDBDef.CroResource).values(APDBDef.CroResource.ThesisId.SetValue(data.ThesisId), APDBDef.CroResource.Title.SetValue(data.Title), APDBDef.CroResource.MedalTitle.SetValue(data.MedalTitle), APDBDef.CroResource.Author.SetValue(data.Author), APDBDef.CroResource.Keywords.SetValue(data.Keywords), APDBDef.CroResource.Description.SetValue(data.Description), APDBDef.CroResource.ProvinceId.SetValue(data.ProvinceId), APDBDef.CroResource.AreaId.SetValue(data.AreaId), APDBDef.CroResource.CompanyId.SetValue(data.CompanyId), APDBDef.CroResource.ActiveId.SetValue(data.ActiveId), APDBDef.CroResource.AuthorCompany.SetValue(data.AuthorCompany), APDBDef.CroResource.AuthorAddress.SetValue(data.AuthorAddress), APDBDef.CroResource.AuthorEmail.SetValue(data.AuthorEmail), APDBDef.CroResource.AuthorPhone.SetValue(data.AuthorPhone), APDBDef.CroResource.StagePKID.SetValue(data.StagePKID), APDBDef.CroResource.GradePKID.SetValue(data.GradePKID), APDBDef.CroResource.ResourceTypePKID.SetValue(data.ResourceTypePKID), APDBDef.CroResource.SubjectPKID.SetValue(data.SubjectPKID), APDBDef.CroResource.CourseTypePKID.SetValue(data.CourseTypePKID), APDBDef.CroResource.StatePKID.SetValue(data.StatePKID), APDBDef.CroResource.PublicStatePKID.SetValue(data.PublicStatePKID), APDBDef.CroResource.DownloadStatePKID.SetValue(data.DownloadStatePKID), APDBDef.CroResource.WinLevelPKID.SetValue(data.WinLevelPKID), APDBDef.CroResource.DownCount.SetValue(data.DownCount), APDBDef.CroResource.FavoriteCount.SetValue(data.FavoriteCount), APDBDef.CroResource.ViewCount.SetValue(data.ViewCount), APDBDef.CroResource.CommentCount.SetValue(data.CommentCount), APDBDef.CroResource.EliteScore.SetValue(data.EliteScore), APDBDef.CroResource.PraiseCount.SetValue(data.PraiseCount), APDBDef.CroResource.Auditor.SetValue(data.Auditor), APDBDef.CroResource.AuditedTime.SetValue(data.AuditedTime), APDBDef.CroResource.AuditOpinion.SetValue(data.AuditOpinion), APDBDef.CroResource.Creator.SetValue(data.Creator), APDBDef.CroResource.CreatedTime.SetValue(data.CreatedTime), APDBDef.CroResource.LastModifier.SetValue(data.LastModifier), APDBDef.CroResource.LastModifiedTime.SetValue(data.LastModifiedTime), APDBDef.CroResource.Score.SetValue(data.Score), APDBDef.CroResource.WeiXinFavoriteCount.SetValue(data.WeiXinFavoriteCount), APDBDef.CroResource.WeiXInPraiseCount.SetValue(data.WeiXInPraiseCount)).where((APDBDef.CroResource.CrosourceId == data.CrosourceId));
                 ExecuteNonQuery(query);
             }
             
@@ -25703,6 +25719,11 @@ namespace Res.Business {
         private long _crosourceId;
         
         /// <summary>
+        /// ThesisId
+        /// </summary>
+        private long _thesisId;
+        
+        /// <summary>
         /// Title
         /// </summary>
         private string _title = string.Empty;
@@ -25903,6 +25924,7 @@ namespace Res.Business {
         /// </summary>
         public CroResourceBase(
                     long crosourceId, 
+                    long thesisId, 
                     string title, 
                     string medalTitle, 
                     string author, 
@@ -25942,6 +25964,7 @@ namespace Res.Business {
                     int weiXinFavoriteCount, 
                     int weiXInPraiseCount) {
             _crosourceId = crosourceId;
+            _thesisId = thesisId;
             _title = title;
             _medalTitle = medalTitle;
             _author = author;
@@ -26001,6 +26024,28 @@ namespace Res.Business {
         public static Int64APColumnDef CrosourceIdDef {
             get {
                 return APDBDef.CroResource.CrosourceId;
+            }
+        }
+        
+        /// <summary>
+        /// ThesisId
+        /// </summary>
+        [Display(Name="论文文件ID")]
+        public virtual long ThesisId {
+            get {
+                return _thesisId;
+            }
+            set {
+                _thesisId = value;
+            }
+        }
+        
+        /// <summary>
+        /// ThesisId APColumnDef
+        /// </summary>
+        public static Int64APColumnDef ThesisIdDef {
+            get {
+                return APDBDef.CroResource.ThesisId;
             }
         }
         
@@ -26877,6 +26922,7 @@ namespace Res.Business {
         /// </summary>
         public virtual void Assignment(CroResource data) {
             CrosourceId = data.CrosourceId;
+            ThesisId = data.ThesisId;
             Title = data.Title;
             MedalTitle = data.MedalTitle;
             Author = data.Author;
@@ -26922,6 +26968,9 @@ namespace Res.Business {
         /// </summary>
         public virtual bool CompareEquals(CroResource data) {
             if ((CrosourceId != data.CrosourceId)) {
+                return false;
+            }
+            if ((ThesisId != data.ThesisId)) {
                 return false;
             }
             if ((Title != data.Title)) {
@@ -27136,6 +27185,7 @@ namespace Res.Business {
         /// </summary>
         public CroResource(
                     long crosourceId, 
+                    long thesisId, 
                     string title, 
                     string medalTitle, 
                     string author, 
@@ -27174,7 +27224,7 @@ namespace Res.Business {
                     double score, 
                     int weiXinFavoriteCount, 
                     int weiXInPraiseCount) : 
-                base(crosourceId, title, medalTitle, author, keywords, description, provinceId, areaId, companyId, activeId, authorCompany, authorAddress, authorEmail, authorPhone, stagePKID, gradePKID, resourceTypePKID, subjectPKID, courseTypePKID, statePKID, publicStatePKID, downloadStatePKID, winLevelPKID, downCount, favoriteCount, viewCount, commentCount, eliteScore, praiseCount, auditor, auditedTime, auditOpinion, creator, createdTime, lastModifier, lastModifiedTime, score, weiXinFavoriteCount, weiXInPraiseCount) {
+                base(crosourceId, thesisId, title, medalTitle, author, keywords, description, provinceId, areaId, companyId, activeId, authorCompany, authorAddress, authorEmail, authorPhone, stagePKID, gradePKID, resourceTypePKID, subjectPKID, courseTypePKID, statePKID, publicStatePKID, downloadStatePKID, winLevelPKID, downCount, favoriteCount, viewCount, commentCount, eliteScore, praiseCount, auditor, auditedTime, auditOpinion, creator, createdTime, lastModifier, lastModifiedTime, score, weiXinFavoriteCount, weiXInPraiseCount) {
         }
     }
     

@@ -44,8 +44,8 @@ namespace Res.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Search(long activeId, long provinceId, long areaId,
-								   long companyId, long subjectId, long deliveryId, long stateId,
+		public ActionResult Search(long activeId, long provinceId, long areaId, long stageId,
+								   long companyId, long subjectId, long stateId,
 								   long gradeId, long maxScore, long minScore,
 								   int current, int rowCount, string searchPhrase, FormCollection fc)
 		{
@@ -99,7 +99,7 @@ namespace Res.Controllers
 			if (minScore > 0)
 				where &= t.Score >= minScore;
 
-			// 按项目，年级，学科,报送类型,公开状态，下载状态数据过滤
+			// 按项目，学段数据过滤
 			if (activeId > 0)
 				where &= t.ActiveId == activeId;
 			if (subjectId > 0)
@@ -108,23 +108,25 @@ namespace Res.Controllers
 				where &= t.GradePKID == gradeId;
 			if (stateId > 0)
 				where &= t.StatePKID == stateId;
+			if (stageId > 0)
+				where &= t.StagePKID == stageId;
 
 			//TODO:if(publicId>0)
 			//   where &= t.PublicStatePKID == publicId;
 			//if (downloadId > 0)
 			//   where &= t.DownloadStatePKID == downloadId;
 
-			var subquery = APQuery.select(dr.ResourceId).from(dr);
-			// 按照报送类型过滤，当deliveryId小于0时为不报送类型
-			if (deliveryId < 0)
-			{
-				where &= t.CrosourceId.NotIn(subquery);
-			}
-			else if (deliveryId > 0)
-			{
-				subquery = subquery.where(dr.DeliveryTypePKID == (deliveryId < 0 ? 0 : deliveryId));
-				where &= t.CrosourceId.In(subquery);
-			}
+			//var subquery = APQuery.select(dr.ResourceId).from(dr);
+			//// 按照报送类型过滤，当deliveryId小于0时为不报送类型
+			//if (deliveryId < 0)
+			//{
+			//	where &= t.CrosourceId.NotIn(subquery);
+			//}
+			//else if (deliveryId > 0)
+			//{
+			//	subquery = subquery.where(dr.DeliveryTypePKID == (deliveryId < 0 ? 0 : deliveryId));
+			//	where &= t.CrosourceId.In(subquery);
+			//}
 
 			int total;
 			var list = APBplDef.CroResourceBpl.TolerantSearch(out total, current, rowCount, where, order);
@@ -141,18 +143,21 @@ namespace Res.Controllers
 								  id = cro.CrosourceId,
 								  cro.Title,
 								  cro.Author,
-								  Type = cro.CourseType, // 微课或微课程
-							  CreatedTime = cro.CreatedTime.ToString("yyyy-MM-dd"),
+								  Type = cro.ResourceType, // 课堂实录或论文
+								  CreatedTime = cro.CreatedTime.ToString("yyyy-MM-dd"),
 								  cro.Province,
 								  cro.Area,
 								  cro.School,
 								  cro.State,
 								  cro.StatePKID,
+								  cro.Stage,
+								  cro.StagePKID,
 								  cro.Score,
 								  cro.WinLevel,
 								  cro.WinLevelPKID,
 								  cro.PublicStatePKID,
 								  cro.DownloadStatePKID,
+								  cro.ResourceTypePKID,
 							  },
 					   current = current,
 					   rowCount = rowCount,
@@ -246,20 +251,20 @@ namespace Res.Controllers
 					   rows = from cro in list
 							  select new
 							  {
-							  //id = cro.CrosourceId,
-							  //cro.Title,
-							  //cro.Author,
-							  //cro.MediumType,
-							  //CreatedTime = cro.CreatedTime.ToString("yyyy-MM-dd"),
-							  //cro.State,
-							  //cro.StatePKID,
-							  //cro.EliteScore,
-							  //cro.ViewCount,
-							  //cro.DownCount,
-							  //cro.FavoriteCount,
-							  //cro.CommentCount,
-							  //cro.StarTotal
-						  },
+								  //id = cro.CrosourceId,
+								  //cro.Title,
+								  //cro.Author,
+								  //cro.MediumType,
+								  //CreatedTime = cro.CreatedTime.ToString("yyyy-MM-dd"),
+								  //cro.State,
+								  //cro.StatePKID,
+								  //cro.EliteScore,
+								  //cro.ViewCount,
+								  //cro.DownCount,
+								  //cro.FavoriteCount,
+								  //cro.CommentCount,
+								  //cro.StarTotal
+							  },
 					   current = current,
 					   rowCount = rowCount,
 					   total = total
@@ -315,13 +320,13 @@ namespace Res.Controllers
 		// POST:		/Resource/Edit
 		//
 
-		public ActionResult Edit(long? id)
+		public ActionResult Edit(long? id, long? type)
 		{
 			InitAreaDropDownData();
 
 			var user = ResSettings.SettingsInSession.User;
 			var model = id == null ?
-						  new CroResource { ProvinceId = user.ProvinceId, AreaId = user.AreaId, CompanyId = user.CompanyId, Courses = new List<MicroCourse> { new MicroCourse() } } :
+						  new CroResource { ProvinceId = user.ProvinceId, AreaId = user.AreaId, CompanyId = user.CompanyId, ResourceTypePKID = type.Value, Courses = new List<MicroCourse> { new MicroCourse() } } :
 						  APBplDef.CroResourceBpl.GetResource(db, id.Value);
 
 			return View(model);
@@ -332,8 +337,6 @@ namespace Res.Controllers
 		public ActionResult Edit(long? resid, CroResource model, FormCollection fc)
 		{
 			var mc = APDBDef.MicroCourse;
-			var et = APDBDef.Exercises;
-			var eti = APDBDef.ExercisesItem;
 
 			CroResource current = null;
 			if (resid != null && resid.Value > 0)
@@ -345,27 +348,15 @@ namespace Res.Controllers
 			{
 				if (current != null)
 				{
-					var exeIds = new List<long>();
-					foreach (var item in current.Courses)
-					{
-						if (item.Exercises != null && item.Exercises.Count > 0)
-							exeIds.AddRange(item.Exercises.Select(x => x.ExerciseId).ToArray());
-					}
-
-					if (exeIds.Count() > 0)
-						APBplDef.ExercisesItemBpl.ConditionDelete(eti.ExerciseId.In(exeIds.ToArray()));
-
-					var courseIds = current.Courses.Select(x => x.CourseId).ToArray();
-					APBplDef.ExercisesBpl.ConditionDelete(et.CourseId.In(courseIds));
 					APBplDef.MicroCourseBpl.ConditionDelete(mc.ResourceId == resid);
 					APBplDef.CroResourceBpl.PrimaryDelete(resid.Value);
 
-					model.CourseTypePKID = model.CourseTypePKID == 0 ? CroResourceHelper.MicroClass : current.CourseTypePKID;
+					//model.ResourceTypePKID = model.CourseTypePKID == 0 ? CroResourceHelper. : current.CourseTypePKID;
 					model.CreatedTime = current.CreatedTime;
 					model.Creator = current.Creator;
 					model.LastModifier = ResSettings.SettingsInSession.UserId;
 					model.LastModifiedTime = DateTime.Now;
-					model.StatePKID = CroResourceHelper.StateWait;
+					model.StatePKID = CroResourceHelper.StateAllow;
 					model.PublicStatePKID = current.PublicStatePKID;
 					model.DownloadStatePKID = current.DownloadStatePKID;
 					model.DownCount = current.DownCount;
@@ -373,12 +364,10 @@ namespace Res.Controllers
 					model.Score = current.Score;
 					model.WinLevelPKID = current.WinLevelPKID;
 					model.StatePKID = current.StatePKID;
-					// model.DeliveryTypePKID = current.DeliveryTypePKID;
 				}
 				else
 				{
-					model.CourseTypePKID = model.CourseTypePKID == 0 ? CroResourceHelper.MicroClass : model.CourseTypePKID;
-					model.StatePKID = CroResourceHelper.StateWait;
+					model.StatePKID = CroResourceHelper.StateAllow;
 					model.Creator = ResSettings.SettingsInSession.UserId;
 					model.CreatedTime = model.LastModifiedTime = DateTime.Now;
 					model.LastModifier = ResSettings.SettingsInSession.UserId;
@@ -386,11 +375,11 @@ namespace Res.Controllers
 					model.PublicStatePKID = CroResourceHelper.Public;
 				}
 
-				// 微课类型为微课时，微课标题为作品标题
-				if (model.CourseTypePKID == CroResourceHelper.MicroClass)
+				if (model.ResourceTypePKID == CroResourceHelper.Video)
 					model.Courses[0].CourseTitle = model.Title;
 
 				model.StatePKID = model.StatePKID == CroResourceHelper.StateDeny ? CroResourceHelper.StateWait : model.StatePKID;
+
 				APBplDef.CroResourceBpl.Insert(model);
 
 				foreach (var item in model.Courses ?? new List<MicroCourse>())
@@ -401,18 +390,6 @@ namespace Res.Controllers
 					item.PlayCount = currentCourse != null ? currentCourse.PlayCount : 0;
 					item.DownCount = currentCourse != null ? currentCourse.DownCount : 0;
 					APBplDef.MicroCourseBpl.Insert(item);
-
-					foreach (var exer in item.Exercises ?? new List<Exercises>())
-					{
-						exer.CourseId = item.CourseId;
-						APBplDef.ExercisesBpl.Insert(exer);
-
-						foreach (var exerItem in exer.Items ?? new List<ExercisesItem>())
-						{
-							exerItem.ExerciseId = exer.ExerciseId;
-							APBplDef.ExercisesItemBpl.Insert(exerItem);
-						}
-					}
 				}
 
 				db.Commit();
@@ -444,7 +421,19 @@ namespace Res.Controllers
 		{
 			var model = APBplDef.CroResourceBpl.GetResource(db, id);
 
-			ViewBag.CurrentCourse = courseId == null || courseId.Value == 0 ? model.Courses[0] : model.Courses.Find(c => c.CourseId == courseId);
+			if (model == null) throw new ApplicationException("资源不存在，请联系管理员");
+
+			// 这里说明下，如果是课堂实录则显示视频，否则显示论文
+			if (model.Courses != null && model.Courses.Count > 0)
+			{
+				var currentCourse = courseId == null || courseId.Value == 0 ? model.Courses[0] : model.Courses.Find(c => c.CourseId == courseId);
+				ViewBag.CurrentCourse = currentCourse;
+			}
+			else if (model.ThesisId > 0)
+			{
+				Files file = db.FilesDal.PrimaryGet(model.ThesisId);
+				model.CurrentThesisFile = file;
+			}
 
 			return View(model);
 		}

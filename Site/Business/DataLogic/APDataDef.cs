@@ -185,6 +185,9 @@ namespace Res.Business
 
       public List<MicroCourse> Courses { get; set; }
 
+	  //TODO:德育论文文件
+	  public Files CurrentThesisFile { get; set; }
+
       #endregion
 
 

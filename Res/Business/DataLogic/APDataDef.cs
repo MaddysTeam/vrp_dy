@@ -187,6 +187,8 @@ namespace Res.Business
 
       public string CourseType { get { return CroResourceHelper.CourseType.GetName(CourseTypePKID); } }
 
+	  public string ResourceType { get { return CroResourceHelper.ResourceType.GetName(ResourceTypePKID); } }
+
       public string WinLevel { get { return CroResourceHelper.WinLevel.GetName(WinLevelPKID); } }
 
       public string Province { get { return GetCompanyName(ProvinceId); } }
@@ -201,12 +203,14 @@ namespace Res.Business
 
       public List<MicroCourse> Courses { get; set; }
 
-      #endregion
+	  public Files CurrentThesisFile { get; set; }
+
+	  #endregion
 
 
-      #region [ private methods ]
+		#region [ private methods ]
 
-      private string GetCompanyName(long companyId)
+		private string GetCompanyName(long companyId)
       {
          var company = ResSettings.SettingsInSession.Companies.Find(x => x.CompanyId == companyId);
          return company != null ? company.CompanyName : string.Empty;

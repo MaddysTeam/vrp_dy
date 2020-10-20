@@ -82,22 +82,16 @@ namespace Res.Controllers
 				return View(model);
 			}
 
-			// 如果是旧系统密码，则也让其登录
-			var md5 = BitConverter.ToString(MD5.Create().ComputeHash(Encoding.Default.GetBytes(model.Password))).Replace("-", "").Substring(0, 15);
-			var u = APDBDef.ResUser;
-			var userInfo = APBplDef.ResUserBpl.ConditionQuery(u.UserName == model.UserName & u.MD5 == md5, null).FirstOrDefault();
-			if (userInfo != null)
-				model.Password = ThisApp.Default_Password;
-
-
 			//这不会计入到为执行帐户锁定而统计的登录失败次数中
 			//若要在多次输入错误密码的情况下触发帐户锁定，请更改为 shouldLockout: true
 			var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
 			switch (result)
 			{
 				case SignInStatus.Success:
+					var u = APDBDef.ResUser;
+					var userInfo = APBplDef.ResUserBpl.ConditionQuery(u.UserName == model.UserName, null).FirstOrDefault();
 					APBplDef.ResUserBpl.SetLastLoginTime(model.UserName);
-					return RedirectToLocal(returnUrl);
+					return RedirectToLocal(Url.Action("Index", "CroMy", new { id = userInfo.Id }));
 				case SignInStatus.LockedOut:
 					return View("Lockout");
 				case SignInStatus.RequiresVerification:

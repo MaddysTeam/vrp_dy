@@ -1,0 +1,198 @@
+﻿@model CroResource
+@{
+	ViewBag.Title = "论文作品详情";
+}
+<style>
+	#pdf {
+		height: 750px;
+	}
+</style>
+<div class="col-md-10 content-wrapper">
+	<div class="row">
+		<div class="col-lg-4 ">
+			<ul class="breadcrumb">
+				<li>
+					<i class="fa fa-home"></i>
+					<a href="@Url.Action("Index", "Home")">首页</a>
+				</li>
+				<li><a href="@Url.Action("Search", "Crosource")">论文作品</a></li>
+				<li class="active">@ViewBag.Title</li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- main -->
+	<div class="content">
+		<div class="main-header">
+			<h2>@ViewBag.Title</h2>
+			<em>本页面查看选中论文的详细信息</em>
+		</div>
+
+		<div class="main-content">
+			<!-- Details -->
+			<div class="details">
+				<!-- details header -->
+				<div class="details-header">
+					<div class="row">
+						<div class="col-lg-4 col-print-4">
+							<h3><strong>@Model.Title</strong></h3>
+						</div>
+					</div>
+				</div>
+				<!-- end details header -->
+				<!-- details summary -->
+				<div class="details-summary">
+					<div class="row">
+						<!-- left side, main content -->
+						<div class="col-lg-9">
+							<div class="row">
+								<div class="col-sm-12">
+
+									<div class="pdf" id="pdf">
+										<iframe></iframe>
+									</div>
+
+								</div>
+							</div> <!-- row -->
+							<hr />
+							<div>
+
+							</div> <!-- row -->
+						</div>
+						<!-- end left side, main content -->
+						<!-- right side, main content -->
+						<div class="col-lg-3">
+							<div class="buttons">
+								@*<a href="@Url.Action("Edit", "Crosource", new { id = Model.CrosourceId })" class="btn btn-primary btn-block"><i class="fa fa-edit"></i> 修改论文信息</a>*@
+							</div>
+							<div class="widget">
+								<div class="widget-header">
+									<h3><i class="fa fa-paperclip"></i> 论文信息</h3>
+								</div>
+
+								<div class="widget-content">
+									<ul class="list-group">
+
+										<li class="list-group-item">论文名称：@Model.Title</li>
+										@if (!string.IsNullOrEmpty(Model.Province))
+										{
+											<li class="list-group-item">省份：@Model.Province</li>
+										}
+										@if (!string.IsNullOrEmpty(Model.Province))
+										{
+											<li class="list-group-item">市区：@Model.Area</li>
+										}
+
+										<li class="list-group-item">创建时间：@Model.CreatedTime.ToString("yyyy-MM-dd")</li>
+										@if (Model.CurrentThesisFile != null && Model.CurrentThesisFile.FileId > 0)
+										{
+											<li class="list-group-item">
+												<span>论文文件： <a href="@Model.CurrentThesisFile.FilePath" target="_blank" data-id="@Model.CurrentThesisFile.FileId" class="btn-info btn-sm btn-download">下 载</a></span>
+											</li>
+										}
+
+										@*@if (!string.IsNullOrEmpty(Model.Province))
+											{
+												<li class="list-group-item">审核意见：<span id="opinion" class="@(Model.StatePKID==10353?"text-danger":"text-info")">@Model.AuditOpinion</span></li>
+											}*@
+
+										<li class="list-group-item hidden">
+											<div class="switchs">
+												@Html.CheckBox("State", Model.StatePKID == CroResourceHelper.StateAllow, new { @class = "switch", data_label_text = "审核合格", data_size = "small" })
+											</div>
+										</li>
+
+
+									</ul>
+								</div>
+							</div>
+
+							<!-- widget -->
+							@*<div class="widget">
+									<div class="widget-header">
+										<h3><i class="fa fa-paperclip"></i> 当前论文信息</h3>
+									</div>
+
+									<div class="widget-content">
+										<ul class="list-group">
+											<li class="list-group-item">
+												<span>论文名称：@Model.Title</span>
+											</li>
+
+
+
+										</ul>
+									</div>
+								</div>*@
+							<!-- end widget -->
+							<!-- widget -->
+							<div class="widget">
+								<div class="widget-header">
+									<h3><i class="fa fa-paperclip"></i> 作者信息</h3>
+								</div>
+
+								<div class="widget-content">
+									<ul class="list-group">
+										<li class="list-group-item">作者：@Model.Author</li>
+										@if (@Model.AuthorCompany != "")
+										{
+											<li class="list-group-item">单位：@Model.AuthorCompany</li>
+										}
+										@if (@Model.AuthorEmail != "")
+										{
+											<li class="list-group-item">电子邮箱：@Model.AuthorEmail</li>
+										}
+										@if (@Model.AuthorPhone != "")
+										{
+											<li class="list-group-item">电话：@Model.AuthorPhone</li>
+										}
+										@if (@Model.AuthorAddress != "")
+										{
+											<li class="list-group-item">地址：@Model.AuthorAddress</li>
+										}
+									</ul>
+								</div>
+							</div>
+							<!-- end widget -->
+						</div>
+						<!-- end right side, main content -->
+
+					</div>
+				</div>
+				<!-- end details summary -->
+
+			</div>
+			<!-- Details -->
+			<!-- modal frame -->
+			<div class="modal fade" id="inner-edit-form" tabindex="-1" role="dialog" aria-hidden="true"></div>
+			<!-- end modal frame -->
+
+		</div>
+		<!-- /main-content -->
+	</div>
+	<!-- /main -->
+
+</div>
+
+
+@section Css{
+}
+@section Plugins{
+	<script src="~/assets/js/pdf.js"></script>
+}
+@section Scripts {
+
+	<script type="text/javascript">
+
+		// bootstrap-switch
+		$("input.switch").not("[data-switch-no-init]").bootstrapSwitch().show();
+
+
+		$(function () {
+
+			var pdfPath = '@Model.CurrentThesisFile.FilePath' + '.pdf';
+			PDFObject.embed(pdfPath, "#pdf");
+
+		});
+	</script>
+}

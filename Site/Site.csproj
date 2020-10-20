@@ -337,6 +337,7 @@
     <Content Include="assets\js\jquery-1.11.2.min.js" />
     <Content Include="assets\js\jquery.media.js" />
     <Content Include="assets\js\npm.js" />
+    <Content Include="assets\js\pdf.js" />
     <Content Include="assets\plugins\playease-master\playease-master\cn\studease\api\playease.api.js" />
     <Content Include="assets\plugins\playease-master\playease-master\cn\studease\core\components\playease.core.components.bulletscreen.js" />
     <Content Include="assets\plugins\playease-master\playease-master\cn\studease\core\components\playease.core.components.contextmenu.js" />
@@ -983,6 +984,8 @@
     <Content Include="Views\CroResource\_exercies.cshtml" />
     <Content Include="Views\CroMy\CroMyPraise.cshtml" />
     <Content Include="Views\CroMy\CroMyMedal.cshtml" />
+    <Content Include="Views\CroResource\_video.cshtml" />
+    <Content Include="Views\CroResource\_thesis.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

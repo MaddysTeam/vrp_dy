@@ -498,7 +498,7 @@ namespace Res.Business
             var u = APDBDef.ResUser;
 
             var query = APQuery
-                .select(t.CrosourceId, t.Title, t.CreatedTime, t.StatePKID,
+                .select(t.CrosourceId, t.Title, t.CreatedTime, t.StatePKID,t.ResourceTypePKID,
                         t.EliteScore, t.CourseTypePKID, t.ProvinceId, t.AreaId, t.CompanyId, t.WinLevelPKID, t.Score,
                         t.PublicStatePKID, t.DownloadStatePKID,
                         u.RealName.As("Author"))

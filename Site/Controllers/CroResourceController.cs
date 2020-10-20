@@ -225,25 +225,31 @@ namespace Res.Controllers
 			var model = APBplDef.CroResourceBpl.GetResource(db, id);
 			ViewBag.Title = model.Title;
 
-			var currentCourse = courseId == null || courseId.Value == 0 ? model.Courses[0] : model.Courses.Find(c => c.CourseId == courseId);
+			// 这里说明下，如果是课堂实录则显示视频，否则显示论文
+			if (model.Courses != null && model.Courses.Count > 0)
+			{
+				var currentCourse = courseId == null || courseId.Value == 0 ? model.Courses[0] : model.Courses.Find(c => c.CourseId == courseId);
+				ViewBag.CurrentCourse = currentCourse;
+			}
+			else if (model.ThesisId > 0)
+			{
+				Files file = db.FilesDal.PrimaryGet(model.ThesisId);
+				model.CurrentThesisFile = file;
+			}
 
 			// 访问历史
-			APBplDef.CroResourceBpl.CountingView(db, id, currentCourse.CourseId, Request.IsAuthenticated ? ResSettings.SettingsInSession.UserId : 0);
-
-			//当前微课
-			ViewBag.CurrentCourse = currentCourse;
+			//APBplDef.CroResourceBpl.CountingView(db, id, currentCourse.CourseId, Request.IsAuthenticated ? ResSettings.SettingsInSession.UserId : 0);
 
 			//评论数量
-			ViewBag.CommentCount = APBplDef.CroCommentBpl.ConditionQueryCount(APDBDef.CroComment
-			   .ResourceId == id & APDBDef.CroComment.Audittype == 1);
+			//ViewBag.CommentCount = APBplDef.CroCommentBpl.ConditionQueryCount(APDBDef.CroComment
+			//   .ResourceId == id & APDBDef.CroComment.Audittype == 1);
 
-			int total = 10;
+			//int total = 10;
 			//右侧热门作品
-			ViewBag.RankingROfHotViewCount = CroHomeRankingList(APDBDef.CroResource.EliteScore.Desc, null, out total, 5, 0);
+			//ViewBag.RankingROfHotViewCount = CroHomeRankingList(APDBDef.CroResource.EliteScore.Desc, null, out total, 5, 0);
 
 			//右侧最新作品
-			ViewBag.RankingROfNewCount = CroHomeRankingList(APDBDef.CroResource.CreatedTime.Desc, null, out total, 5, 0);
-
+			//ViewBag.RankingROfNewCount = CroHomeRankingList(APDBDef.CroResource.CreatedTime.Desc, null, out total, 5, 0);
 
 			return View(model);
 		}

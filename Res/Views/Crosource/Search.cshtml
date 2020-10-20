@@ -3,9 +3,9 @@
 
 	var user = ResSettings.SettingsInSession.User;
 	var deliverySelectList = new List<SelectListItem>();
-	if (user.UserTypePKID == ResUserHelper.ProvinceAdmin || user.UserTypePKID==ResUserHelper.Admin)
+	if (user.UserTypePKID == ResUserHelper.ProvinceAdmin || user.UserTypePKID == ResUserHelper.Admin)
 	{
-		deliverySelectList.Add(new SelectListItem { Text= CroResourceHelper.ProviceDelivery, Value=CroResourceHelper.ProviceLevelDelivery.ToString() } );
+		deliverySelectList.Add(new SelectListItem { Text = CroResourceHelper.ProviceDelivery, Value = CroResourceHelper.ProviceLevelDelivery.ToString() });
 		deliverySelectList.Add(new SelectListItem { Text = CroResourceHelper.CityDelivery, Value = CroResourceHelper.CityLevelDelivery.ToString() });
 	}
 	else if (user.UserTypePKID == ResUserHelper.CityAdmin)
@@ -38,21 +38,22 @@
 		<div class="main-content">
 
 			<div class="buttons">
-				<a href="@Url.Action("Edit", "Crosource")" id="addUser" class="btn btn-danger btn-md">新增作品</a>&nbsp;
+				@*<a href="@Url.Action("Edit", "Crosource")" id="addUser" class="btn btn-danger btn-md">新增作品</a>&nbsp;*@
 				@if (user.UserTypePKID == ResUserHelper.Admin)
 				{
 					<a href="#" id="approve" class="btn btn-info btn-approve">审核</a>
-					<a href="#" id="public" class="btn btn-primary btn-public">公开设置</a>
-					<a href="#" id="download" class="btn btn-default btn-download">下载设置</a>
-					<a href="#" id="winLevel" class="btn btn-success btn-winLevel">设置奖项</a>
+					@*<a href="#" id="public" class="btn btn-primary btn-public">公开设置</a>
+						<a href="#" id="download" class="btn btn-default btn-download">下载设置</a>
+						<a href="#" id="winLevel" class="btn btn-success btn-winLevel">设置奖项</a>*@
 				}
 				else if (user.UserTypePKID == ResUserHelper.CityAdmin || user.UserTypePKID == ResUserHelper.ProvinceAdmin)
 				{
-					<a href="#" id="delivery" class="btn btn-primary btn-delivary">报送</a>
-					<a href="#" id="cancel" class="btn btn-default btn-cancel">取消报送</a>
-					<a href="#" id="winLevel" class="btn btn-success btn-winLevel">设置奖项</a>
+					<a href="#" id="approve" class="btn btn-info btn-approve">审核</a>
+					@*<a href="#" id="delivery" class="btn btn-primary btn-delivary">报送</a>
+						<a href="#" id="cancel" class="btn btn-default btn-cancel">取消报送</a>
+						<a href="#" id="winLevel" class="btn btn-success btn-winLevel">设置奖项</a>*@
 				}
-				
+
 			</div>
 			<!-- widget -->
 			<div class="widget">
@@ -78,19 +79,22 @@
 						<div class="col-sm-2">
 							@Html.DropDownList("Company", (ViewBag.Companies as List<ResCompany>).Select(x => new SelectListItem { Text = x.CompanyName, Value = x.CompanyId.ToString() }), "选择单位", new { @class = "form-control company" })
 						</div>
-						<div class="col-sm-2">
-							@Html.DropDownList("Grade", CroResourceHelper.Grade.GetSelectList(), "选择年级", new { @class = "form-control search-field" })
+						<div class="col-sm-2 hidden">
+								@Html.DropDownList("Grade", CroResourceHelper.Grade.GetSelectList(), "选择年级", new { @class = "form-control search-field" })
 						</div>
 						<div class="col-sm-2">
-							@Html.DropDownList("Subject", CroResourceHelper.Subject.GetSelectList(), "选择学科", new { @class = "form-control search-field" })
+							@Html.DropDownList("Stage", CroResourceHelper.Stage.GetSelectList(), "选择学段", new { @class = "form-control search-field" })
 						</div>
-						<div class="col-sm-2" style="margin-top:10px;">
-							@Html.DropDownList("Delivery", deliverySelectList, "报送状态", new { @class = "form-control search-field" })
+						<div class="col-sm-2 hidden">
+								@Html.DropDownList("Subject", CroResourceHelper.Subject.GetSelectList(), "选择学科", new { @class = "form-control search-field" })
 						</div>
 						@*<div class="col-sm-2" style="margin-top:10px;">
-							@Html.DropDownList("Public", CroResourceHelper.PublicState.GetSelectList(), "选择公开状态", new { @class = "form-control search-field" })
-						</div>*@
-						<div class="col-sm-2" style="margin-top:10px;">
+								@Html.DropDownList("Delivery", deliverySelectList, "报送状态", new { @class = "form-control search-field" })
+							</div>*@
+						@*<div class="col-sm-2" style="margin-top:10px;">
+								@Html.DropDownList("Public", CroResourceHelper.PublicState.GetSelectList(), "选择公开状态", new { @class = "form-control search-field" })
+							</div>*@
+						<div class="col-sm-2">
 							@Html.DropDownList("State", CroResourceHelper.State.GetSelectList(), "状态", new { @class = "form-control search-field" })
 						</div>
 						<div class="col-sm-2" style="margin-top:10px;">
@@ -113,13 +117,13 @@
 									<th data-column-id="Author" cmdwidth>上传作者</th>
 									<th data-column-id="Type" cmdwidth>作品类型</th>
 									@*<th data-column-id="Province" class="cmdwidth">省份</th>
-									<th data-column-id="Area" class="cmdwidth">地区</th>*@
+										<th data-column-id="Area" class="cmdwidth">地区</th>*@
 									<th data-column-id="School" class="cmdwidth">单位</th>
-									@*<th data-column-id="CreatedTime">上传日期</th>*@
-									<th data-column-id="WinLevel">获奖等级</th>
+									<th data-column-id="CreatedTime">上传日期</th>
+									@*<th data-column-id="WinLevel">获奖等级</th>*@
 									<th data-column-id="Score" class="cmdwidth">作品得分</th>
 									<th data-column-id="State" class="cmdwidth">状态</th>
-									<th data-column-id="cmd_command" data-formatter="cmd_command" data-sortable="false" class="titlewidth"  >操作</th>
+									<th data-column-id="cmd_command" data-formatter="cmd_command" data-sortable="false" class="titlewidth">操作</th>
 								</tr>
 							</thead>
 						</table>
@@ -155,9 +159,10 @@
 				companyId: $('#Company').val()=='' ? 0:$('#Company').val(),
 				subjectId: $('#Subject').val()=='' ? 0:$('#Subject').val(),
 				gradeId: $('#Grade').val()=='' ? 0:$('#Grade').val(),
+				stageId: $('#Stage').val()=='' ? 0 :$('#Stage').val(),
 				minScore:$('#MinScore').val()==''? 0:$('#MinScore').val(),
 				maxScore:$('#MaxScore').val()==''? 0:$('#MaxScore').val(),
-				deliveryId:$('#Delivery').val()==''? 0:$('#Delivery').val(),
+				//deliveryId:$('#Delivery').val()==''? 0:$('#Delivery').val(),
 				//publicId:$('#Public').val()==''? 0:$('#Public').val(),
 				stateId:$('#State').val()==''? 0:$('#State').val(),
 			};
@@ -180,21 +185,21 @@
 						var str ="";
 						if (isAdmin || isProvinceAdmin || isCityAdmin) {
 							str+= "<a class='btn btn-xs' href='/Crosource/Details/" + row.id+"'><fa class='fa fa-eye'></fa></a>&nbsp;";
-							str+= "<a class='btn btn-xs' href='/Crosource/Edit/" + row.id+"' title='修改'><fa class='fa fa-pencil'></fa></a>&nbsp;";
+							//str+= "<a class='btn btn-xs' href='/Crosource/Edit/" + row.id+"' title='修改'><fa class='fa fa-pencil'></fa></a>&nbsp;";
 						}
 						if (isAdmin) {
 							str+= "<button type='button' class='btn btn-xs " + (row["StatePKID"] == 10352 ? "isallow" : "") + " cmd_approve' data-row-id='" + row.id + "' data-row-title='" + row.Title + "' title='审核合格/不合格'><span class='fa fa-gavel'></span></button>&nbsp;";
 						}
-						if (isAdmin || isProvinceAdmin || isCityAdmin) {
-							str+= "<button type='button' class='btn btn-xs " + (row["WinLevelPKID"] > 0 ? "iselite" : "") + " cmd_elite' data-row-id='" + row.id + "' data-row-title='" + row.Title + "' title='设置奖项'><fa>奖</fa></button>&nbsp;";
-						}
+						//if (isAdmin || isProvinceAdmin || isCityAdmin) {
+						//	str+= "<button type='button' class='btn btn-xs " + (row["WinLevelPKID"] > 0 ? "iselite" : "") + " cmd_elite' data-row-id='" + row.id + "' data-row-title='" + row.Title + "' title='设置奖项'><fa>奖</fa></button>&nbsp;";
+						//}
 						//if (isAdmin) {
 						//	str+= "<button type='button' class='btn btn-xs cmd_public' data-row-id='" + row.id + "' data-row-title='" + row.Title + "' title='公开/不公开'><fa>" + (row["PublicStatePKID"] == 10450 ? "取消公开" : "公开") + "</fa></button>&nbsp;";
 						//}
 						//if (isAdmin) {
 						//	str+= "<button type='button' class='btn btn-xs  cmd_download' data-row-id='" + row.id + "' data-row-title='" + row.Title + "' title='下载/禁止下载'><fa>" + (row["DownloadStatePKID"] == 10453 ? "下载" : "禁止下载") + "</fa></button>&nbsp;";
 						//}
-					
+
 						return str;
 					},
 

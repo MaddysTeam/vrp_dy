@@ -171,10 +171,11 @@ namespace Res.Controllers
 			var et = APDBDef.Exercises;
 			var eti = APDBDef.ExercisesItem;
 
-			if(model.ResourceTypePKID==CroResourceHelper.Thesis && model.ThesisId <= 0)
-			{
+			if (model.ResourceTypePKID == CroResourceHelper.Video && model.Courses.Count <= 0)
 				throw new ApplicationException("");
-			}
+
+			if(model.ResourceTypePKID==CroResourceHelper.Thesis && model.ThesisId <= 0)
+				throw new ApplicationException("");
 
 			CroResource current = null;
 			if (resid != null && resid.Value > 0)
@@ -206,7 +207,7 @@ namespace Res.Controllers
 				}
 				else
 				{
-					model.CourseTypePKID = model.CourseTypePKID;// == 0 ? CroResourceHelper.Video : model.CourseTypePKID;
+					//model.CourseTypePKID = model.CourseTypePKID;// == 0 ? CroResourceHelper.Video : model.CourseTypePKID;
 					model.StatePKID = CroResourceHelper.StateWait;
 					model.Creator = id;
 					model.CreatedTime = model.LastModifiedTime = DateTime.Now;
@@ -215,11 +216,11 @@ namespace Res.Controllers
 					model.PublicStatePKID = CroResourceHelper.Public;
 				}
 
-				// 微课类型为微课时，微课标题为作品标题
-				//if (model.CourseTypePKID == CroResourceHelper.Video)
-				//	model.Courses[0].CourseTitle = model.Title;
+				if (model.ResourceTypePKID == CroResourceHelper.Video)
+					model.Courses[0].CourseTitle = model.Title;
 
 				model.StatePKID = model.StatePKID == CroResourceHelper.StateDeny ? CroResourceHelper.StateWait : model.StatePKID;
+
 				APBplDef.CroResourceBpl.Insert(model);
 
 				foreach (var item in model.Courses ?? new List<MicroCourse>())

@@ -283,6 +283,7 @@
     <Content Include="assets\img\user4.png" />
     <Content Include="assets\img\user5.png" />
     <Content Include="assets\js\app.js" />
+    <Content Include="assets\js\pdf.js" />
     <Content Include="assets\plugins\alertify.js-0.3.11\example\assets\css\main.css" />
     <Content Include="assets\plugins\alertify.js-0.3.11\example\assets\fonts\fontawesome-webfont.svg" />
     <Content Include="assets\plugins\alertify.js-0.3.11\example\assets\img\banner.jpg" />
@@ -1887,6 +1888,9 @@
     <Content Include="Views\Eval\Export.cshtml" />
     <Content Include="Views\Shared\_PDFLayout.cshtml" />
     <Content Include="Views\Eval\ExportAll.cshtml" />
+    <Content Include="Views\Shared\_Row.cshtml" />
+    <Content Include="Views\Crosource\_video.cshtml" />
+    <Content Include="Views\Crosource\_thesis.cshtml" />
     <None Include="xml.schema.definition\apgen.xsd">
       <SubType>Designer</SubType>
     </None>

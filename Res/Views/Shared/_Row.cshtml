@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit" />
+	<title>德育活动后台管理</title>
+	<!-- CSS -->
+	@*@Styles.Render("~/css/bootstrap")
+	@RenderSection("css", required: false)
+	@Styles.Render("~/css/app")*@
+	<link href="/assets/plugins/font-awesome-4.2.0/css/font-awesome.css" rel="stylesheet">
+	<link href="/assets/plugins/bootstrap-3.3.2/css/bootstrap.css" rel="stylesheet">
+	<link href="/assets/css/app.css" rel="stylesheet">
+	<style>
+		.header_link {
+			width: 100%;
+			margin: 0px auto;
+			display: block;
+		}
+
+		.header_link img {
+				width: 100%;
+		}
+
+		.container {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+  max-width:1200px;
+  min-width:800px;
+}
+
+	</style>
+</head>
+<body>
+	<div class="d_top">
+		<div class="container">
+			<a class="header_link"><img src="~/assets/img/thesis_banner.jpg"/></a>
+		</div>
+	</div>
+	<div class="container bk_gray">
+		<div class="wrap">
+			@RenderBody()
+		</div>
+	</div>
+	<div class="d_bottom">
+		<div class="container d_b">
+			<p>版权所有 Copy right © 2020</p>
+			<p>上海市电化教育馆主管、上海教育软件发展有限公司技术支持</p>
+		</div>
+	</div>
+
+	@Scripts.Render("~/js/jquery")
+	@Scripts.Render("~/js/bootstrap")
+	@Scripts.Render("~/js/modernizr")
+	@Scripts.Render("~/js/jqueryval")
+	@RenderSection("plugins", required: false)
+	@Scripts.Render("~/js/app")
+	@RenderSection("scripts", required: false)
+</body>
+</html>

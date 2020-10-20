@@ -20,12 +20,12 @@ namespace Res.Controllers
    {
 
 
-
       //
       // 首页
       // GET:		/Home/Index
       //
-      [AllowAnonymous]
+
+	  [Authorize]
       public ActionResult Index(string type)
       {
          int total;

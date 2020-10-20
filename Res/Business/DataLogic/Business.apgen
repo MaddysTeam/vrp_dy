@@ -269,6 +269,9 @@
 				<columns>
 					<add name="CrosourceId" type="long" identityType="Provider" primaryKey="true" display="作品ID"/>
 
+					<!-- FileId  TODO:德育活动论文资源一对一 -->
+					<add name="ThesisId" type="long" display="论文文件ID"/>
+
 					<!-- Content -->
 					<add name="Title" type="string" dataLength="250" required="true" display="标题"/>
 					<add name="MedalTitle" type="string" dataLength="250" isNullable="true" display="奖状标题"/>
