@@ -23,7 +23,7 @@ namespace Res
          app.UseCookieAuthentication(new CookieAuthenticationOptions
          {
             AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-            LoginPath = new PathString("/Account/Login"),
+            LoginPath = new PathString("/activities/Account/Login"),
             Provider = new CookieAuthenticationProvider
             {
                // 当用户登录时使应用程序可以验证安全戳。

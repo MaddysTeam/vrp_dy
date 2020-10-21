@@ -20,7 +20,7 @@ namespace Res.Business
 		// Session 中缺省的缓存项时间（分钟）
 		public const int CacheMinutes = 5;
 
-      public const string DefaultPassword = "123456";
+      public const string DefaultPassword = "Win@123";
 
       public const string DefaultPasswordHash = "AK+wLXNW7S/B7aGUl1RLIdhOKgfIuI1P+nUkU8+B6UOErgIcL0na05YtW0vrw4JzoA==";
 

@@ -139,11 +139,11 @@
 
 		return $.extend(true, {}, gridOptions, {
 
-			url: "/User/Search",
+			url: "@Url.Action("Search", "User")",
 
 			formatters: {
 				"LookupUser": function (column, row) {
-					var text = row[column.id], url = '/User/Info/' + row["id"];
+					var text = row[column.id], url = '@Url.Action("Info", "User")/' + row["id"];
 					return "<a href='" + url + "'>" + text + "</a>";
 				},
 				"cmd_edit": function (column, row) {

@@ -176,7 +176,7 @@
 			var url='@Url.Action("Edit", "Crosource")';
 			return $.extend(true, {}, gridOptions, {
 
-				url: "/Crosource/Search",
+				url: "@Url.Action("Search", "Crosource")",
 
 				requestHandler: function (request) { return $.extend(true, request, getGlobalRequest()); },
 
@@ -184,7 +184,7 @@
 					"cmd_command":function(column,row){
 						var str ="";
 						if (isAdmin || isProvinceAdmin || isCityAdmin) {
-							str+= "<a class='btn btn-xs' href='/Crosource/Details/" + row.id+"'><fa class='fa fa-eye'></fa></a>&nbsp;";
+							str+= "<a class='btn btn-xs' href='@Url.Action("Details", "Crosource")/" + row.id+"'><fa class='fa fa-eye'></fa></a>&nbsp;";
 							//str+= "<a class='btn btn-xs' href='/Crosource/Edit/" + row.id+"' title='修改'><fa class='fa fa-pencil'></fa></a>&nbsp;";
 						}
 						if (isAdmin) {
@@ -267,7 +267,7 @@
 								message = value ? "审核该作品为 - 不合格" : "审核该作品为 - 合格";
 								alertify.prompt("审核意见", function (e, str) {
 									if (e) {
-										$.post("/Crosource/Approve", { id: id, value: !value, opinion: str }, function (data, status) {
+										$.post("@Url.Action("Approve", "Crosource")", { id: id, value: !value, opinion: str }, function (data, status) {
 											alertify.success("作品 【" + title + "】 审核完成。");
 											tr.toggleClass("flagallow");
 											brother.text(!value ? "审核合格" : "审核不合格");

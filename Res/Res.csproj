@@ -1891,6 +1891,8 @@
     <Content Include="Views\Shared\_Row.cshtml" />
     <Content Include="Views\Crosource\_video.cshtml" />
     <Content Include="Views\Crosource\_thesis.cshtml" />
+    <Content Include="Views\Eval\_video.cshtml" />
+    <Content Include="Views\Eval\_thesis.cshtml" />
     <None Include="xml.schema.definition\apgen.xsd">
       <SubType>Designer</SubType>
     </None>

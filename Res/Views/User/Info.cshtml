@@ -94,7 +94,7 @@
 
 		$(function () {
 			$("#ResetPwd").on("click", function () {
-				$.post("/User/ResetPwd", { id: id }, function (data) {
+				$.post("@Url.Action("ResetPwd", "User")", { id: id }, function (data) {
 					alert(data);
 				});
 			})
