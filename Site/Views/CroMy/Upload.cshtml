@@ -4,7 +4,7 @@
 	Layout = "~/Views/Shared/_CroLayout.cshtml";
 	//ViewBag.Title = "上传新作品";
 	string title = Model.ResourceTypePKID == CroResourceHelper.Video ? "实录标题" : "论文标题";
-	Files thesis = new Files() { FileId = 0, FileName = "上传论文" };
+	Files thesis = Model.CurrentThesisFile ?? new Files();
 }
 <script>
 	if (navigator.userAgent.indexOf("MSIE") > 0) {
@@ -101,13 +101,13 @@
 									@Html.ValidationMessageFor(m => m.Author)
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-3"> <span class="request text-danger">*</span> 作者单位</label>
-								<div class="col-sm-9">
-									@Html.TextBoxFor(m => m.AuthorCompany, new { @class = "form-control", maxlength = "255", placeholder = "作者所在单位" })
-									@Html.ValidationMessageFor(m => m.AuthorCompany)
-								</div>
-							</div>
+							@*<div class="form-group">
+									<label class="control-label col-sm-3"> <span class="request text-danger">*</span> 作者单位</label>
+									<div class="col-sm-9">
+										@Html.TextBoxFor(m => m.AuthorCompany, new { @class = "form-control", maxlength = "255", placeholder = "作者所在单位" })
+										@Html.ValidationMessageFor(m => m.AuthorCompany)
+									</div>
+								</div>*@
 							<div class="form-group">
 								@Html.LabelFor(m => m.AuthorPhone, new { @class = "control-label col-sm-3" })
 								<div class="col-sm-9">
@@ -132,6 +132,11 @@
 
 							@if (Model.ResourceTypePKID == CroResourceHelper.Video)
 							{
+								<div class="alert alert-danger ">
+									上传视频注意事项：<br>
+									*1  视频容量最大不能超过400M <br>
+									*2  如上传视频后，在预览页面播放视频为黑屏状态，请使用转换工具将mp4视频文件编码转换成AVC(H264)后重新上传
+								</div>
 								foreach (var item in Model.Courses ?? new List<MicroCourse>())
 								{
 									@Html.Partial("CroMyCourses", item)
@@ -139,11 +144,17 @@
 							}
 							else
 							{
+								<div>
+									<div class="col-sm-9 col-sm-offset-3 alert alert-danger">
+										上传论文注意事项：<br>
+										*每人提交一篇，字数3000-5000字<br>
+									</div>
+								</div>
 								<div class="form-group thesisUploader uploader">
 									<label class="control-label col-sm-3"> <span class="request"></span>论文附件</label>
 									<div class="col-sm-9">
 										<div class="input-group">
-											@Html.TextBox(thesis.FileName, "", new { @class = "form-control thesisUploader resource-path", maxlength = "255", placeholder = "添加论文附件", @readonly = "readonly" })
+											@Html.TextBoxFor(x => x.CurrentThesisFile.FileName, new { @class = "form-control thesisUploader resource-path", maxlength = "255", placeholder = "添加论文附件", @readonly = "readonly" })
 											<div class="input-group-btn">
 												<button type="button" class="btn btn-default dropdown-toggle btn-upload" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-upload"></i> </button>
 												<button type="button" class="btn  btn-cancel @(thesis.FileId>0? "":"hidden")" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-remove"></i></button>
@@ -155,7 +166,7 @@
 											</div>
 										</div>
 									</div>
-									@Html.HiddenFor(x => x.ThesisId, new { @class = "fileId" });
+									@Html.HiddenFor(x => x.ThesisId, new { @class = "fileId" })
 								</div>
 							}
 							@*<div class="form-group text-center">
@@ -244,7 +255,7 @@
 					}
 				});*@
 
-				$('.courseUploader .resource-path, .thesisUploader .resource-path').each(function(){
+				$('.courseUploader .resource-path, .thesisUploader .resource-path,.designUploader .resource-path').each(function(){
 					var $this=$(this);
 					if($this.val()==''){
 						isValid=false;
@@ -256,11 +267,11 @@
 					var o = createSubmitObject();
 					$.post('@Url.Action("Upload", "CroMy")',{resid:'@Model.CrosourceId',model:o},function(){
 						location.href='@Url.Action("CroMyResource", "CroMy",new { id= id})';
-			});
-		}
+					});
+				}
 
 				return false;
-		});
+			});
 
 		})
 
@@ -335,6 +346,8 @@
 			RelationSelect($("#ProvinceId"), $("#AreaId"), areas, "选择地区");
 			RelationSelect($("#AreaId"), $("#CompanyId"), schools, "选择学校");
 
+			bindUploadCancelEvnt();
+
 			// bind uploaders
 			bindUploaders();
 		});
@@ -354,7 +367,7 @@
 					$('.uploadForms').append($('<form action="'+action+'" class="'+dropzoneName+' uploaderForm'+i+'"></form>'));
 					$('.'+dropzoneName).dropzone({
 						addRemoveLinks: !0,
-						maxFilesize: 200,
+						maxFilesize: 500,
 						filesizeBase:100*1024,
 						maxFiles: 100,
 						acceptedFiles:mimeTypes,

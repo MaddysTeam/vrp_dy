@@ -157,7 +157,13 @@ namespace Res.Controllers
 			if (resid == null)
 				model = new CroResource { ProvinceId = user.ProvinceId, AreaId = user.AreaId, CompanyId = user.CompanyId, ResourceTypePKID = type.Value, Courses = new List<MicroCourse> { new MicroCourse() } };
 			else
-				model= APBplDef.CroResourceBpl.GetResource(db, resid.Value); 
+			{
+				model = APBplDef.CroResourceBpl.GetResource(db, resid.Value);
+				if (model.ThesisId > 0)
+				{
+					model.CurrentThesisFile = db.FilesDal.PrimaryGet(model.ThesisId);
+				}
+			}
 
 			return View(model);
 		}

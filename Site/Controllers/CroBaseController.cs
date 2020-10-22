@@ -98,8 +98,7 @@ namespace Res.Controllers
          var query = APQuery.select(t.CrosourceId, t.Title, t.Author, t.PublicStatePKID, t.DownloadStatePKID,t.ResourceTypePKID, //t.CoverPath, t.FileExtName, 
              t.Description, t.CreatedTime, t.AuditOpinion, t.StatePKID,t.ActiveId)
             .from(t)
-            .where(t.Creator == userid)
-
+            .where(t.Creator == userid & t.StatePKID != (CroResourceHelper.StateDelete | CroResourceHelper.StateDeny))
             .order_by(t.CreatedTime.Desc)
             .primary(t.CrosourceId)
             .take(take)

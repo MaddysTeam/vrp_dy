@@ -39,6 +39,10 @@
 					<div id="video" class="carousel slide" style="width:100%;height:500px">
 						<div id='player'></div>
 					</div>
+					<div class="alert alert-danger ">
+						注意事项：<br>
+						  如播放视频为黑屏状态，请使用转换工具将mp4视频文件编码转换成AVC(H264)后重新上传
+					</div>
 				}
 				else
 				{
@@ -80,37 +84,18 @@
 							<h3><i class="fa fa-tencent-weibo"></i> 微课信息</h3>
 						</div>*@
 
-					@*<div class="div ">
-							<p class="eval_star">
-								<b>点击评分：</b>
-								@for (int i = 0; i < 5; i++)
-								{
-									if (course.StarCount > i)
-									{
-										<span class="runtime_star yes" style="width:2%"></span>
-									}
-									else
-									{
-										<span class="runtime_star no" style="width:2%"></span>
-									}
-								}
-
-							</p>
-							<p><span>微课名称： @course.CourseTitle </span><span>&nbsp;&nbsp;练 习 题：<button class="btn btn-danger btn-sm" id="exercies">答 题</button></span></p>
+					<div class="div ">
+							
 							<p>
-								<span>教学设计： <a href="@(course.DesignId > 0? course.DesignPreviewPath :"javascript:void(0)")" target="_blank" class="btn btn-info btn-sm">预 览</a></span><span>教学反思： <a href="@(course.SummaryId > 0? course.SummaryPreviewPath :"javascript:void(0)")" target="_blank" class="btn btn-info btn-sm">  预 览</a></span>
+								<span>教学设计： <a href="@(course.DesignId > 0? course.DesignPreviewPath :"javascript:void(0)")" target="_blank" class="btn btn-info btn-sm">预 览</a></span><span>&nbsp;&nbsp;教学反思： <a href="@(course.SummaryId > 0? course.SummaryPreviewPath :"javascript:void(0)")" target="_blank" class="btn btn-info btn-sm">  预 览</a></span>
 							</p>
 
 							<p>
-								@if (Model.DownloadStatePKID == CroResourceHelper.AllowDownload)
-								{
-								<span>课&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;件： <a href="@(course.CoursewareId > 0 ? course.CoursewarePath : "javascript:void(0)")" data-id="@course.CoursewareId"  class="btn btn-info btn-sm btn-download">  下 载</a></span><span>其他附件： <a href="@(course.AttachmentId > 0 ? course.AttachmentPath : "javascript:void(0)")" data-id="@course.AttachmentId"  class="btn btn-info btn-sm btn-download">  下 载</a></span>
-								}
+								<span>课&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;件： <a href="@(course.CoursewareId > 0 ? course.CoursewarePath : "javascript:void(0)")" data-id="@course.CoursewareId"  class="btn btn-info btn-sm btn-download">  下 载</a></span><span>&nbsp;&nbsp;其他附件： <a href="@(course.AttachmentId > 0 ? course.AttachmentPath : "javascript:void(0)")" data-id="@course.AttachmentId"  class="btn btn-info btn-sm btn-download">  下 载</a></span>
 							</p>
-							<p><span>播放次数：@course.PlayCount </span><span>下载次数：@course.DownCount</span></p>
 
 							<h3><i class="fa fa-user"></i> 作者信息</h3>
-						</div>*@
+						</div>
 
 					<div class="div ">
 						<p><span>作　　者： @Model.Author</span></p>

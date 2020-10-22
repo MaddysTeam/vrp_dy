@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
+using Res.Business;
 
 namespace Res
 {
@@ -23,7 +24,7 @@ namespace Res
          app.UseCookieAuthentication(new CookieAuthenticationOptions
          {
             AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-            LoginPath = new PathString("/Account/Login"),
+            LoginPath = new PathString("/"+ThisApp.ProjectKey+"/Account/Login"),
             Provider = new CookieAuthenticationProvider
             {
                // 当用户登录时使应用程序可以验证安全戳。

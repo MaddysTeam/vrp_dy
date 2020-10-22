@@ -34,6 +34,8 @@ namespace Res.Business
 
 		public static long CurrentActiveId = 2;
 
+		public static string ProjectKey=  System.Configuration.ConfigurationManager.AppSettings["projectKey"];
+
 	}
 
 }

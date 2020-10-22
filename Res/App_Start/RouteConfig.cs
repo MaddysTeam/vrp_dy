@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Res.Business;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,7 +16,7 @@ namespace Res
 
 			routes.MapRoute(
 				 name: "Default",
-				 url: "activities/{controller}/{action}/{id}",
+				 url: ThisApp.ProjectKey + "/{controller}/{action}/{id}",
 				 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
 			);
 		}
