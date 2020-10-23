@@ -367,7 +367,7 @@
 					$('.uploadForms').append($('<form action="'+action+'" class="'+dropzoneName+' uploaderForm'+i+'"></form>'));
 					$('.'+dropzoneName).dropzone({
 						addRemoveLinks: !0,
-						maxFilesize: 500,
+						maxFilesize: 1000,
 						filesizeBase:100*1024,
 						maxFiles: 100,
 						acceptedFiles:mimeTypes,
@@ -423,7 +423,7 @@
 			bindResourceUploader($('.coverUploader'),'cover','image/*');
 			bindResourceUploader($('.designUploader'),'design','.doc,.docx');
 			bindResourceUploader($('.summaryUploader'),'summary','.doc,.docx');
-			bindResourceUploader($('.coursewareUploader'),'courseware','.doc,.docx');
+			bindResourceUploader($('.coursewareUploader'),'courseware','.doc,.docx,.ppt,.pptx');
 			bindResourceUploader($('.attachmentUploader'),'attachment','.doc,.docx,.txt,.wps,.rtf,.pdf,.rar,.zip,.ppt,.pptx,jpg,.png,.gif,.xls,.xlsx');
 			bindResourceUploader($('.thesisUploader'),'thesis','.doc,.docx');
 		}

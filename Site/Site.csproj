@@ -930,12 +930,10 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\_Bootstrap3Pagination.cshtml" />
-    <Content Include="Views\Shared\_Row.cshtml" />
     <Content Include="Views\My\Index.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\My\Edit.cshtml" />
     <Content Include="Views\My\ChgPwd.cshtml" />
-    <Content Include="Views\Shared\_CroLayout.cshtml" />
     <Content Include="Views\Shared\_sidebar.cshtml" />
     <Content Include="Views\CroMy\Comment.cshtml" />
     <Content Include="Views\CroMy\Edit.cshtml" />
@@ -987,6 +985,8 @@
     <Content Include="Views\CroMy\CroMyMedal.cshtml" />
     <Content Include="Views\CroResource\_video.cshtml" />
     <Content Include="Views\CroResource\_thesis.cshtml" />
+    <Content Include="Views\Shared\_CroLayout.cshtml" />
+    <Content Include="Views\Shared\_Row.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

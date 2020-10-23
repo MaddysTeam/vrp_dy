@@ -243,7 +243,7 @@ namespace Res.Controllers
                      {
                         Address = item.Address.Trim(),
                         CompanyName = item.CompanyName.Trim(),
-                        Phone = item.Phone.Trim(),
+                        Phone = item.Phone==null? "":item.Phone.Trim(),
                         ParentId = area.CompanyId,
                         Path = area.Path + String.Format("{0}\\", db.ResCompanyDal.GetNewId(APDBDef.ResCompany.CompanyId))
                      };

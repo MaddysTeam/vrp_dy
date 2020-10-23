@@ -513,7 +513,7 @@ namespace Res.Controllers
                      throw new Exception("用户类型有误");
                   }
                   long uerType = ResUserHelper.UserTypeDic[item.UserType];
-                  if (uerType == ResUserHelper.RegistedUser || uerType == ResUserHelper.SchoolAdmin && (ProvinceId == 0 || AreaId == 0 || CompanyId == 0))
+                  if ((uerType == ResUserHelper.RegistedUser || uerType == ResUserHelper.SchoolAdmin) && (ProvinceId == 0 || AreaId == 0 || CompanyId == 0))
                   {
                      throw new Exception("注册用户或校管理员必须有省市，地区和单位");
                   }
