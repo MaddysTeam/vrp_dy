@@ -135,7 +135,8 @@
 								<div class="alert alert-danger ">
 									上传视频注意事项：<br>
 									*1  视频容量最大不能超过400M <br>
-									*2  如上传视频后，在预览页面播放视频为黑屏状态，请使用转换工具将mp4视频文件编码转换成AVC(H264)后重新上传
+									*2  如上传视频后，在预览页面播放视频为黑屏状态，请使用转换工具将mp4视频文件编码转换成AVC(H264)后重新上传<br />
+									*3  请等待进度条至100% 或者文本框内出现文件名称后点击确认上传
 								</div>
 								foreach (var item in Model.Courses ?? new List<MicroCourse>())
 								{
@@ -331,6 +332,8 @@
 		var schools=@Html.Raw(Json.Encode(ViewBag.SchoolsDic));
 		var courseType=@Model.CourseTypePKID;
 
+		console.log(areas);
+
 
 		$(function () {
 
@@ -343,9 +346,10 @@
 			$("#ActiveId option[value='1']").remove();
 
 			// relation select
-			RelationSelect($("#ProvinceId"), $("#AreaId"), areas, "选择地区");
-			RelationSelect($("#AreaId"), $("#CompanyId"), schools, "选择学校");
-
+			if(areas.length>1){ //TODO strange issue will fix later
+				RelationSelect($("#ProvinceId"), $("#AreaId"), areas, "选择地区");
+				RelationSelect($("#AreaId"), $("#CompanyId"), schools, "选择学校");
+			}
 			bindUploadCancelEvnt();
 
 			// bind uploaders
@@ -384,7 +388,7 @@
 										if(i<=99){
 											$uploader.find('.progress-bar').css('width', parseInt(++i)+"%").text(i+'%');
 										}
-									},1500)
+									},3000)
 
 								})
 								.on('totaluploadprogress', function(i){
