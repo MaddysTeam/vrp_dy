@@ -29,7 +29,8 @@
 		@section Scripts {
 	<script src="~/assets/plugins/jwplayer/jwplayer.js"></script>
 	<script src="~/assets/plugins/playease-master/playease-master/playease.min.js"></script>
-			<script type="text/javascript">
+	<script src="~/assets/js/pdf.js"></script>
+	<script type="text/javascript">
 		//var id = @Model.CrosourceId;
 
 		//
@@ -38,6 +39,10 @@
 
 
 		$(function () {
+
+			var ua = navigator.userAgent;
+			var pdfPath = '@course.DesignPath' + '.pdf';
+			PDFObject.embed(pdfPath, "#pdf");
 
 			//$("#comment").keyup(function () {
 			//	$(".img_ta_num").html("评语还可以填写"+(150 - $(this).val().length)+"个字")
@@ -153,7 +158,7 @@
 			});
 
 		});
-			</script>
+	</script>
 		}
 	}
 	else if (Model.ResourceTypePKID == CroResourceHelper.Thesis)

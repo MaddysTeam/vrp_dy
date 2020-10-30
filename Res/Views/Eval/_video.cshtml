@@ -77,33 +77,34 @@
 							}
 						</div> <!-- row -->
 						<hr />
-						<div>
-							<div class="panel">
-								<div class="panel-body">
-									@Model.Description
-								</div>
-							</div>
-							<div style="overflow-y:hidden; overflow-x:auto; white-space: nowrap;">
-								<div class="details-courses">
-									<ul class="course-list">
-										@foreach (var item in Model.Courses)
-										{
-											<li style="display:inline-block;list-style-type: none;">
-												<a href="/Eval/Details/?id=@resultId&resId=@Model.CrosourceId&courseId=@course.CourseId&groupId=@groupId">
-													<img src="@item.FitCoverPath" style="width:184px; height:115px;" />
-												</a>
-												<div class="text-center">@item.CourseTitle</div>
-											</li>
-}
-									</ul>
-								</div>
-							</div>
-
-
-						</div> <!-- row -->
+						<div class="pdf" id="pdf" style="height:800px;">
+							<iframe></iframe>
+						</div>
 					</div>
 					<!-- end left side, main content -->
 					<div class="panel evalArea col-lg-5" style="height:800px;">
+						<div class="alert alert-info ">
+							<strong>班会设计评分标准</strong><br />
+							1.主体性。凸显学生的主体地位，面向每一个学生的个性发展，尊重他们的特殊需要和兴趣爱好；强调学生的参与体验和亲身经历，重视学生在活动过程中的自我生成和创造性建构，为学生自主性的充分发挥开辟广阔时空。<br />
+							2.针对性。贴近学生、贴近生活和贴近实际，聚焦一个主题，注重正面引导，紧密联系学生需求和班级实情开展教育活动。<br />
+							3.适切性。根据教育规律和学生年龄特点设计活动，目标贴切，主题鲜明，内容丰富；形式多样，生动活泼，为学生所喜闻乐见。<br />
+							4.操作性。教育设计体现结构化，具有清晰的层次感，富有内在的逻辑性；实施步骤具体，过程完整，操作性强。<br />
+							5.创新性。锐意进取，立意新颖，方法和形式生动、多样，求新忌陈，不落俗套，具有时代特点，富有创意，体现新思路、新角度、新特色和新水平。<br />
+							6.规范性。方案书写有必要的元素，符合规范的设计体例；语言文字生动流畅，富有感染力。<br />
+							<hr />
+
+							<strong>班会课课堂实录评分标准</strong><br />
+							1.主题导入，自然贴切，引发主动学习。<br />
+							2.教育过程，师生互动，关注动态生成。<br />
+							3.活动形式，强调体验，侧重主体感悟。<br />
+							4.资源利用，精选妙用，激发学生思维。<br />
+							5.媒体技术，运用适切，增强教育效果。<br />
+							6.课堂小结，概括提炼，升华主题内涵。<br />
+							7.目标达成，自主建构，促进自我教育。<br />
+							8.学生参与，乐于合作，发展思辨能力。<br />
+							9.课堂氛围，民主和谐，有助观点分享。<br />
+							10.课外衔接，有机贯通，注重行为引导。<br />
+						</div>
 						<div class="panel">
 							<div class="panel-body">
 								<table id="bootgrid" class="table table-striped table-hover">
@@ -227,7 +228,7 @@
 							</div>
 							<!-- end widget -->
 							<!-- widget -->
-							<div class="widget col-md-4">
+							@*<div class="widget col-md-4">
 								<div class="widget-header">
 									<h3><i class="fa fa-paperclip"></i> 作者信息</h3>
 								</div>
@@ -239,7 +240,7 @@
 											<li class="list-group-item">单位：@Model.AuthorCompany</li>			}
 									</ul>
 								</div>
-							</div>
+							</div>*@
 							<!-- end widget -->
 						</div>
 					</div>

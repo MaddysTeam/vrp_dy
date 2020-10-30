@@ -229,7 +229,7 @@ namespace Res.Business
       public string CoursewarePath { get; set; }
       public string AttachmentPath { get; set; }
       public string DesignPreviewPath => string.IsNullOrEmpty(DesignPath) ? string.Empty : DesignPath + FileHelper.PdfExtName;
-      public string SummaryPreviewPath => string.IsNullOrEmpty(SummaryPath) ? string.Empty : SummaryPath + FileHelper.PdfExtName;
+      public string SummaryPreviewPath => string.IsNullOrEmpty(SummaryPath) ? string.Empty : SummaryPath; //TODO 临时改成承诺书
 
       public List<Exercises> Exercises { get; set; }
 

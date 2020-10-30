@@ -205,7 +205,7 @@
 
 					"LookupResource": function (column, row) {
 						var str='';
-						var text = row[column.id], url = '/Crosource/Details/' + row["id"];
+						var text = row[column.id], url = '@Url.Action("Details", "Crosource")/' + row["id"];
 						str+= "<span class='elitedot'>【奖】</span>";
 						str+="<a href='" + url + "'>" + text + "</a>";
 						return str;

@@ -5,7 +5,7 @@
 	var indications = ViewBag.Indications as List<Indication>;
 	var resultId = Request["id"] == null ? 0 : Convert.ToInt32(Request["id"]);
 	var groupId = Request["groupId"] == null ? 0 : Convert.ToInt32(Request["groupId"]);
-
+	var course = ViewBag.CurrentCourse as MicroCourse;
 	var comment = (string)ViewBag.Comment;
 }
 <div class="content">
@@ -40,6 +40,12 @@
 					</div>
 					<!-- end left side, main content -->
 					<div class="panel evalArea col-lg-5" style="height:800px;">
+						<div class="alert alert-info ">
+							论文评选评分标准</br>
+							1.科学性：遵循学生成长规律和教育规律，教育思想先进，有科学的教育理论支撑。</br>
+							2.创新性：在开展班级爱国主义教育、劳动教育等过程中，教育方法和形式富有创意，有独到的见解。</br>
+							3.推广性：能结合理论和实践说明问题，总结的经验和做法有借鉴意义和推广价值</br>
+						</div>
 						<div class="panel">
 							<div class="panel-body">
 								<table id="bootgrid" class="table table-striped table-hover">

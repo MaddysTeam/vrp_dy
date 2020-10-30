@@ -256,7 +256,7 @@
 					}
 				});*@
 
-				$('.courseUploader .resource-path, .thesisUploader .resource-path,.designUploader .resource-path').each(function(){
+				$('.courseUploader .resource-path, .thesisUploader .resource-path,.designUploader .resource-path,.summaryUploader .resource-path').each(function(){
 					var $this=$(this);
 					if($this.val()==''){
 						isValid=false;
@@ -426,7 +426,7 @@
 			bindResourceUploader($('.courseUploader'),'video','.mp4');
 			bindResourceUploader($('.coverUploader'),'cover','image/*');
 			bindResourceUploader($('.designUploader'),'design','.doc,.docx');
-			bindResourceUploader($('.summaryUploader'),'summary','.doc,.docx');
+			bindResourceUploader($('.summaryUploader'),'summary','image/*');
 			bindResourceUploader($('.coursewareUploader'),'courseware','.doc,.docx,.ppt,.pptx');
 			bindResourceUploader($('.attachmentUploader'),'attachment','.doc,.docx,.txt,.wps,.rtf,.pdf,.rar,.zip,.ppt,.pptx,jpg,.png,.gif,.xls,.xlsx');
 			bindResourceUploader($('.thesisUploader'),'thesis','.doc,.docx');
