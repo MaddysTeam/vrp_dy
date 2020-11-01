@@ -171,8 +171,12 @@
 		$(function () {
 
 			var ua = navigator.userAgent;
-			var pdfPath = '@Model.CurrentThesisFile.FilePath' + '.pdf';
-			PDFObject.embed(pdfPath, "#pdf");
+
+			var filePath = '@Model.CurrentThesisFile.FilePath';
+			if (filePath.indexOf('.docx') >= 0 && filePath.indexOf('.doc') >= 0) {
+				filePath = filePath + '.pdf';
+			}
+			PDFObject.embed(filePath, "#pdf");
 
 
 			$('.btn-eval').on('click',function(){
